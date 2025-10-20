@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>示例组件</title>
+  <style>
+    :root {
+      --bg: #0f172a; /* slate-900 */
+      --card: #111827; /* gray-900 */
+      --text: #e5e7eb; /* gray-200 */
+      --muted: #94a3b8; /* slate-400 */
+      --primary: #3b82f6; /* blue-500 */
+      --accent: #22c55e; /* green-500 */
+      --border: #1f2937; /* gray-800 */
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Microsoft YaHei", sans-serif; background: var(--bg); color: var(--text); }
+    .container { max-width: 980px; margin: 0 auto; padding: 32px 16px; }
+    header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+    h1 { font-size: 22px; margin: 0; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px; }
+    .card h2 { font-size: 16px; margin: 0 0 12px; color: var(--muted); }
+    .row { display: flex; gap: 8px; flex-wrap: wrap; }
+    button { appearance: none; border: 1px solid var(--border); padding: 8px 14px; border-radius: 8px; color: var(--text); background: #0b1220; cursor: pointer; }
+    button.primary { background: var(--primary); border-color: transparent; color: #fff; }
+    button.secondary { background: #0b1220; }
+    button.outline { background: transparent; }
+    button:disabled { opacity: .6; cursor: not-allowed; }
+    .input, select, textarea { width: 100%; background: #0b1220; color: var(--text); border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; }
+    label { display: flex; align-items: center; gap: 8px; margin: 6px 0; }
+    .toggle { position: relative; width: 44px; height: 24px; background: #0b1220; border: 1px solid var(--border); border-radius: 999px; cursor: pointer; }
+    .toggle input { display: none; }
+    .knob { position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; border-radius: 50%; background: var(--muted); transition: left .2s ease, background .2s ease; }
+    .toggle input:checked + .knob { left: 22px; background: var(--accent); }
+    .result { margin-top: 12px; font-size: 12px; color: var(--muted); white-space: pre-wrap; border-top: 1px dashed var(--border); padding-top: 8px; }
+    footer { margin-top: 16px; font-size: 12px; color: var(--muted); text-align: center; }
+    .big-title { font-size: 72px; font-weight: 900; line-height: 1.1; margin: 0 0 16px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="big-title">HelloWorld</h1>
+    <header>
+      <h1>示例组件 / Demo Components</h1>
+      <div class="row">
+        <button class="outline" id="reset">重置</button>
+      </div>
+    </header>
+
+    <div class="grid">
+      <section class="card">
+        <h2>按钮 Buttons</h2>
+        <div class="row">
+          <button class="primary" id="btnPrimary">主按钮</button>
+          <button class="secondary" id="btnSecondary">次按钮</button>
+          <button class="outline" id="btnOutline">线框按钮</button>
+          <button disabled>禁用按钮</button>
+        </div>
+        <div class="result" id="resButtons"></div>
+      </section>
+
+      <section class="card">
+        <h2>文本输入 Inputs</h2>
+        <input class="input" id="inputText" placeholder="输入一些文本..." />
+        <textarea class="input" id="inputArea" rows="3" placeholder="多行文本..."></textarea>
+        <div class="row">
+          <input class="input" id="inputNumber" type="number" placeholder="数字" style="max-width:160px" />
+          <input class="input" id="inputRange" type="range" min="0" max="100" value="30" style="max-width:260px" />
+        </div>
+        <div class="result" id="resInputs"></div>
+      </section>
+
+      <section class="card">
+        <h2>选项组 Checkboxes & Radios</h2>
+        <div>
+          <strong style="font-size:13px;color:var(--muted)">复选框</strong>
+          <label><input type="checkbox" name="cb" value="A"> 选项 A</label>
+          <label><input type="checkbox" name="cb" value="B"> 选项 B</label>
+          <label><input type="checkbox" name="cb" value="C"> 选项 C</label>
+        </div>
+        <div style="margin-top:8px">
+          <strong style="font-size:13px;color:var(--muted)">单选框</strong>
+          <label><input type="radio" name="rd" value="X" checked> 选项 X</label>
+          <label><input type="radio" name="rd" value="Y"> 选项 Y</label>
+          <label><input type="radio" name="rd" value="Z"> 选项 Z</label>
+        </div>
+        <div class="result" id="resChoices"></div>
+      </section>
+
+      <section class="card">
+        <h2>下拉选择 Selects</h2>
+        <select id="selSingle" class="input">
+          <option value="apple">苹果</option>
+          <option value="banana">香蕉</option>
+          <option value="orange">橙子</option>
+        </select>
+        <select id="selMulti" class="input" multiple size="4" style="margin-top:8px">
+          <option value="red">红色</option>
+          <option value="green">绿色</option>
+          <option value="blue">蓝色</option>
+          <option value="purple">紫色</option>
+        </select>
+        <div class="result" id="resSelects"></div>
+      </section>
+
+      <section class="card">
+        <h2>开关 Toggle</h2>
+        <label class="toggle">
+          <input id="toggle" type="checkbox" />
+          <span class="knob"></span>
+        </label>
+        <div class="result" id="resToggle"></div>
+      </section>
+    </div>
+
+    <footer>此页仅为前端控件示例，不涉及后端提交。</footer>
+  </div>
+
+  <script>
+    const text = document.getElementById('inputText');
+    const area = document.getElementById('inputArea');
+    const num = document.getElementById('inputNumber');
+    const range = document.getElementById('inputRange');
+    const resInputs = document.getElementById('resInputs');
+
+    const sel1 = document.getElementById('selSingle');
+    const sel2 = document.getElementById('selMulti');
+    const resSelects = document.getElementById('resSelects');
+
+    const resChoices = document.getElementById('resChoices');
+    const resButtons = document.getElementById('resButtons');
+    const resToggle = document.getElementById('resToggle');
+
+    document.getElementById('btnPrimary').addEventListener('click', () => {
+      resButtons.textContent = '点击了主按钮';
+    });
+    document.getElementById('btnSecondary').addEventListener('click', () => {
+      resButtons.textContent = '点击了次按钮';
+    });
+    document.getElementById('btnOutline').addEventListener('click', () => {
+      resButtons.textContent = '点击了线框按钮';
+    });
+
+    const updateInputs = () => {
+      resInputs.textContent = `文本: ${text.value}\n多行: ${area.value}\n数字: ${num.value || ''}\n滑块: ${range.value}`;
+    };
+    text.addEventListener('input', updateInputs);
+    area.addEventListener('input', updateInputs);
+    num.addEventListener('input', updateInputs);
+    range.addEventListener('input', updateInputs);
+
+    const updateChoices = () => {
+      const cbs = Array.from(document.querySelectorAll('input[name="cb"]:checked')).map(i => i.value);
+      const rd = (document.querySelector('input[name="rd"]:checked')||{}).value || '';
+      resChoices.textContent = `复选: ${cbs.join(', ')} | 单选: ${rd}`;
+    };
+    document.querySelectorAll('input[name="cb"]').forEach(i => i.addEventListener('change', updateChoices));
+    document.querySelectorAll('input[name="rd"]').forEach(i => i.addEventListener('change', updateChoices));
+
+    const updateSelects = () => {
+      const single = sel1.value;
+      const multi = Array.from(sel2.selectedOptions).map(o => o.value).join(', ');
+      resSelects.textContent = `单选: ${single} | 多选: ${multi}`;
+    };
+    sel1.addEventListener('change', updateSelects);
+    sel2.addEventListener('change', updateSelects);
+
+    const toggle = document.getElementById('toggle');
+    const updateToggle = () => {
+      resToggle.textContent = toggle.checked ? '已开启' : '已关闭';
+    };
+    toggle.addEventListener('change', updateToggle);
+
+    document.getElementById('reset').addEventListener('click', () => {
+      text.value = '';
+      area.value = '';
+      num.value = '';
+      range.value = 30;
+      document.querySelectorAll('input[name="cb"]').forEach(i => i.checked = false);
+      document.querySelector('input[name="rd"]').checked = true;
+      sel1.selectedIndex = 0;
+      Array.from(sel2.options).forEach(o => o.selected = false);
+      toggle.checked = false;
+      resButtons.textContent = '';
+      resInputs.textContent = '';
+      resChoices.textContent = '';
+      resSelects.textContent = '';
+      resToggle.textContent = '';
+    });
+
+    // 初始化显示
+    updateInputs();
+    updateChoices();
+    updateSelects();
+    updateToggle();
+  </script>
+</body>
+</html>
