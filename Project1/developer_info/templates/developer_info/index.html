@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>开发者信息 - {{ developer_name }}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'developer_info/css/style.css' %}">
+    <script src="{% static 'developer_info/js/script.js' %}" defer></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1>开发者信息平台</h1>
+            <p>欢迎访问开发者信息页面 - {{ developer_name }} ({{ developer.student_id }})</p>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <section class="navigation">
+                <h2>Available Sections</h2>
+                <div class="button-group">
+                    {% for section in sections %}
+                    <button class="section-btn" data-section="{{ section.id }}" data-title="{{ section.title }}">
+                        {{ section.title }}
+                    </button>
+                    {% endfor %}
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h2 id="section-title">Select a section to view content</h2>
+                <div id="content" class="content-area">
+                    <p class="placeholder-text">Content will appear here when you select a section.</p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 开发者信息系统 - {{ developer_name }} ({{ developer.student_id }}) 版权所有</p>
+            {% if developer.github_url or developer.linkedin_url %}
+            <div class="social-links">
+                {% if developer.github_url %}
+                <a href="{{ developer.github_url }}" target="_blank" rel="noopener noreferrer">GitHub</a>
+                {% endif %}
+                {% if developer.linkedin_url %}
+                <a href="{{ developer.linkedin_url }}" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+    </footer>
+</body>
+</html>
